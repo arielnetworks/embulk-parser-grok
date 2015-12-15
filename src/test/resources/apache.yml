@@ -1,0 +1,35 @@
+in:
+  type: file
+  path_prefix: __INPUT_PATH__
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: grok
+    grok_pattern_files:
+      - __PROJECT_DIR__/pattern/grok-patterns
+      - __PROJECT_DIR__/pattern/my-patterns
+    timestamp_parser: ruby
+    grok_pattern: '%{COMBINEDAPACHELOG}'
+    columns:
+    - {name: request, type: string}
+    - {name: agent, type: string}
+    - {name: COMMONAPACHELOG, type: string}
+    - {name: auth, type: string}
+    - {name: ident, type: string}
+    - {name: verb, type: string}
+    - {name: referrer, type: string}
+    - {name: bytes, type: long}
+    - {name: response, type: long}
+    - {name: clientip, type: string}
+    - {name: COMBINEDAPACHELOG, type: string}
+    - {name: httpversion, type: string}
+    - {name: rawrequest, type: string}
+    - {name: timestamp, format: '%d/%b/%Y:%T %z', type: timestamp}
+exec: {}
+out:
+  type: file
+  path_prefix: __OUTPUT_PATH__
+  file_ext: output.csv
+  formatter:
+    type: csv
+    delimiter: "|"

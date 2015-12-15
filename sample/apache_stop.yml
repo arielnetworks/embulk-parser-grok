@@ -1,0 +1,29 @@
+in:
+  type: file
+  path_prefix: src/test/resources/apache_with_error.log
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: grok
+    grok_pattern_files: [pattern/grok-patterns, pattern/my-patterns]
+    timestamp_parser: ruby
+    grok_pattern: '%{COMBINEDAPACHELOG}'
+    stop_on_invalid_record: true
+    columns:
+    - {name: request, type: string}
+    - {name: agent, type: string}
+    - {name: COMMONAPACHELOG, type: string}
+    - {name: auth, type: string}
+    - {name: ident, type: string}
+    - {name: verb, type: string}
+    - {name: referrer, type: string}
+    - {name: bytes, type: long}
+    - {name: response, type: long}
+    - {name: clientip, type: string}
+    - {name: COMBINEDAPACHELOG, type: string}
+    - {name: httpversion, type: string}
+    - {name: rawrequest, type: string}
+    - {name: timestamp, format: '%d/%b/%Y:%T %z', type: timestamp}
+exec:
+  guess_plugins: [grok]
+out: {type: stdout}

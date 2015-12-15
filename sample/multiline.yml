@@ -1,0 +1,19 @@
+in:
+  type: file
+  path_prefix: src/test/resources/multiline.log
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: grok
+    grok_pattern_files: [pattern/grok-patterns, pattern/my-patterns]
+    timestamp_parser: ruby
+    first_line_pattern: '%{MULTILINELOG_FIRSTLINE}'
+    grok_pattern: '%{MULTILINELOG}'
+    columns:
+    - {name: timestamp, format: '%Y-%m-%d %H:%M:%S.%N %z', type: timestamp}
+    - {name: log_level, type: string}
+    - {name: message, type: string}
+    - {name: stack_trace, type: string}
+exec:
+  guess_plugins: [grok]
+out: {type: stdout}

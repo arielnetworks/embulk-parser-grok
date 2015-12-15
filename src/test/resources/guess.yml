@@ -1,0 +1,19 @@
+in:
+  type: file
+  path_prefix: __INPUT_PATH__
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: grok
+    grok_pattern_files:
+      - __PROJECT_DIR__/pattern/grok-patterns
+      - __PROJECT_DIR__/pattern/my-patterns
+    guess_patterns:
+      - "%{COMBINEDAPACHELOG}"
+      - "%{COMMONAPACHELOG}"
+    timestamp_parser: ruby
+exec:
+  guess_plugins:
+    - "grok"
+out:
+  type: stdout

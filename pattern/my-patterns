@@ -1,0 +1,12 @@
+
+LOGLEVEL ([A|a]lert|ALERT|[T|t]race|TRACE|[D|d]ebug|DEBUG|[N|n]otice|NOTICE|[I|i]nfo|INFO|[W|w]arn?(?:ing)?|WARN?(?:ING)?|[E|e]rr?(?:or)?|ERR?(?:OR)?|[C|c]rit?(?:ical)?|CRIT?(?:ICAL)?|[F|f]atal|FATAL|[S|s]evere|SEVERE|EMERG(?:ENCY)?|[Ee]merg(?:ency)?)
+
+TIMESTAMP_ISO8601_WITH_SPACE %{YEAR}-%{MONTHNUM}-%{MONTHDAY}[T ]%{HOUR:UNWANTED}:?%{MINUTE:UNWANTED}(?::?%{SECOND:UNWANTED})?( %{ISO8601_TIMEZONE})?
+
+MULTILINES (.*+\n)*.*
+MULTILINESTOTHEEND (.*+\n)*+
+
+MULTILINELOG_FIRSTLINE %{TIMESTAMP_ISO8601_WITH_SPACE:timestamp} \[%{LOGLEVEL:log_level}\] %{DATA:message}$
+MULTILINELOG %{TIMESTAMP_ISO8601_WITH_SPACE:timestamp} \[%{LOGLEVEL:log_level}\] %{DATA:message}(?:\n%{MULTILINESTOTHEEND:stack_trace})?$
+
+
