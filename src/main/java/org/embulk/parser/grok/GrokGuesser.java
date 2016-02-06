@@ -180,6 +180,13 @@ public class GrokGuesser {
             return format != null ? format.equals(that.format) : that.format == null;
 
         }
+
+        @Override
+        public int hashCode() {
+            int result = type.hashCode();
+            result = 31 * result + format.hashCode();
+            return result;
+        }
     }
 }
 

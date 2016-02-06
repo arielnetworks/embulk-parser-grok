@@ -27,4 +27,8 @@ public class StreamUtil {
         return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.NONNULL | Spliterator.ORDERED), false);
     }
 
+    protected StreamUtil() {
+        // prevents calls from subclass
+        throw new UnsupportedOperationException();
+    }
 }

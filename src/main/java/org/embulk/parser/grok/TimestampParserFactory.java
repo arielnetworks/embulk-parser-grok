@@ -82,4 +82,8 @@ public class TimestampParserFactory {
                         }).collect(Collectors.toList());
         }
     }
+    protected TimestampParserFactory() {
+        // prevents calls from subclass
+        throw new UnsupportedOperationException();
+    }
 }
